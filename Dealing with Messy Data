@@ -1,0 +1,46 @@
+# Subset the DataFrame
+sub_df = so_survey_df[['Age', 'Gender']]
+
+# Print the number of non-missing values
+print(sub_df.notnull().sum())
+
+
+# Print the top 10 entries of the DataFrame
+print(sub_df.head(10))
+
+
+# Print the number of rows and columns
+print(so_survey_df.shape)
+
+
+# Print the count of occurrences
+print(so_survey_df['Gender'].value_counts())
+
+
+# Print the first five rows of StackOverflowJobsRecommend column
+print(so_survey_df['StackOverflowJobsRecommend'].head())
+
+
+# Remove the commas in the column
+so_survey_df['RawSalary'] = so_survey_df['RawSalary'].str.replace(',', '')
+
+
+# Attempt to convert the column to numeric values
+numeric_vals = pd.to_numeric(so_survey_df['RawSalary'], errors='coerce')
+
+# Find the indexes of missing values
+idx = numeric_vals.isna()
+
+# Print the relevant rows
+print(so_survey_df['RawSalary'][idx])
+
+
+# Use method chaining
+so_survey_df['RawSalary'] = so_survey_df['RawSalary']\
+                              .str.replace(',', '')\
+                              .str.replace('$', '')\
+                              .str.replace('£', '')\
+                              .astype(float)
+ 
+# Print the RawSalary column
+print(so_survey_df['RawSalary'])
